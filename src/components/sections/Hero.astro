@@ -1,34 +1,182 @@
 ---
 import Button from "@/components/starwind/button/Button.astro";
+
+// Carrusel de 3 mensajes (direcciones A/B/C), cada uno con su propia foto.
+// Las tres son de instalaciones solares por ahora — cuando haya fotos de
+// BESS/plantas industriales, son mejor match temático para B y C.
+const slides = [
+  {
+    kicker: "Almacenamiento y generación de energía para industria",
+    headline:
+      "Resolviste de dónde viene tu energía. Falta resolver qué pasa cuando falla — y cuánto te cuesta en el peor momento del día.",
+    subhead:
+      "Mexillum diseña, financia y opera sistemas de almacenamiento (BESS) y generación solar que protegen el EBITDA de tu operación. Un solo responsable, de la ingeniería a la operación.",
+    image: "/images/hero/solar-molino.avif",
+  },
+  {
+    kicker: "Almacenamiento y generación de energía para industria",
+    headline:
+      "Tu generador de emergencia cubre el apagón. No cubre el hueco de tensión que te para la línea.",
+    subhead:
+      "Mexillum diseña, financia y opera sistemas de almacenamiento (BESS) y generación solar que protegen tu operación en el momento exacto en que la red no alcanza. Un solo responsable, de la ingeniería a la operación.",
+    image: "/images/hero/solar-campo.avif",
+  },
+  {
+    kicker: "Gestión de riesgo y costo de energía para industria",
+    headline:
+      "El costo de un corte no aparece en tu factura eléctrica. Aparece en el lote perdido y la línea parada.",
+    subhead:
+      "Mexillum diseña, financia y opera sistemas de almacenamiento (BESS) y generación solar que controlan ese costo antes de que llegue a tu EBITDA. Un solo responsable, de la ingeniería a la operación.",
+    image: "/images/hero/paneles-solares.webp",
+  },
+];
 ---
 
-<section class="dark bg-background text-foreground border-b border-border">
-  <div class="mx-auto flex min-h-[92vh] max-w-5xl flex-col justify-center px-6 py-24 sm:px-8">
-    <p
-      data-reveal
-      class="font-mono text-xs tracking-[0.2em] text-primary uppercase sm:text-sm"
+<section class="dark bg-background text-foreground border-b border-border relative overflow-hidden">
+  <div
+    class="relative flex min-h-[92vh] flex-col justify-center"
+    data-hero-carousel
+    role="region"
+    aria-roledescription="carrusel"
+    aria-label="Mensajes principales"
+  >
+    <div
+      class="animate-reveal absolute inset-0 bg-cover bg-center transition-opacity duration-500"
+      style={`background-image: url(${slides[0].image})`}
+      data-hero-bg
     >
-      Almacenamiento y generación de energía para industria
-    </p>
+    </div>
+    <div class="absolute inset-0 bg-background/70" aria-hidden="true"></div>
 
-    <h1
-      data-reveal
-      class="mt-6 max-w-4xl text-4xl leading-[1.08] font-semibold text-balance sm:text-5xl md:text-6xl"
+    <div
+      class="animate-reveal relative z-10 mx-auto w-full max-w-5xl px-6 py-24 transition-opacity duration-500 sm:px-8"
+      data-hero-content
     >
-      Resolviste de dónde viene tu energía. Falta resolver qué pasa cuando
-      falla — y cuánto te cuesta en el peor momento del día.
-    </h1>
+      <p
+        class="font-mono text-xs tracking-[0.2em] text-primary uppercase sm:text-sm"
+        data-hero-kicker
+      >
+      </p>
 
-    <p data-reveal class="mt-8 max-w-2xl text-lg text-foreground/80 sm:text-xl">
-      Mexillum diseña, financia y opera sistemas de almacenamiento (BESS) y
-      generación solar que protegen el EBITDA de tu operación. Un solo
-      responsable, de la ingeniería a la operación.
-    </p>
+      <h1
+        class="mt-6 max-w-4xl text-4xl leading-[1.08] font-semibold text-balance sm:text-5xl md:text-6xl"
+        data-hero-headline
+      >
+      </h1>
 
-    <div data-reveal class="mt-10">
-      <Button as="a" href="/diagnostico" variant="primary" size="lg">
-        Iniciar diagnóstico de mi planta
-      </Button>
+      <p class="mt-8 max-w-2xl text-lg text-foreground/80 sm:text-xl" data-hero-subhead></p>
+
+      <div class="mt-10">
+        <Button as="a" href="/diagnostico" variant="primary" size="lg">
+          Iniciar diagnóstico de mi planta
+        </Button>
+      </div>
+    </div>
+
+    <div class="relative z-10 mx-auto mt-4 flex w-full max-w-5xl items-center gap-5 px-6 pb-2 sm:px-8">
+      <button
+        type="button"
+        data-hero-prev
+        aria-label="Mensaje anterior"
+        class="text-foreground/50 hover:text-foreground flex size-9 items-center justify-center rounded-full border border-border transition-colors"
+      >
+        ‹
+      </button>
+
+      <div class="flex items-center gap-2" role="tablist" aria-label="Mensajes del hero" data-hero-dots>
+        {
+          slides.map((_, i) => (
+            <button
+              type="button"
+              role="tab"
+              data-hero-dot={i}
+              aria-label={`Ir al mensaje ${i + 1} de ${slides.length}`}
+              class="h-1.5 w-7 rounded-full bg-foreground/25 transition-colors"
+            />
+          ))
+        }
+      </div>
+
+      <button
+        type="button"
+        data-hero-next
+        aria-label="Mensaje siguiente"
+        class="text-foreground/50 hover:text-foreground flex size-9 items-center justify-center rounded-full border border-border transition-colors"
+      >
+        ›
+      </button>
     </div>
   </div>
 </section>
+
+<script define:vars={{ slides }}>
+  const root = document.currentScript.previousElementSibling;
+  const bg = root.querySelector("[data-hero-bg]");
+  const content = root.querySelector("[data-hero-content]");
+  const kickerEl = root.querySelector("[data-hero-kicker]");
+  const headlineEl = root.querySelector("[data-hero-headline]");
+  const subheadEl = root.querySelector("[data-hero-subhead]");
+  const dots = [...root.querySelectorAll("[data-hero-dot]")];
+  const prevBtn = root.querySelector("[data-hero-prev]");
+  const nextBtn = root.querySelector("[data-hero-next]");
+
+  let index = 0;
+  let timer;
+
+  function render(i) {
+    kickerEl.textContent = slides[i].kicker;
+    headlineEl.textContent = slides[i].headline;
+    subheadEl.textContent = slides[i].subhead;
+    bg.style.backgroundImage = `url(${slides[i].image})`;
+    dots.forEach((d, di) => {
+      d.classList.toggle("bg-primary", di === i);
+      d.classList.toggle("bg-foreground/25", di !== i);
+      d.setAttribute("aria-selected", di === i ? "true" : "false");
+    });
+  }
+
+  function goTo(i) {
+    const next = (i + slides.length) % slides.length;
+    bg.classList.add("opacity-0");
+    content.classList.add("opacity-0");
+    setTimeout(() => {
+      index = next;
+      render(index);
+      bg.classList.remove("opacity-0");
+      content.classList.remove("opacity-0");
+    }, 350);
+  }
+
+  const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  function startTimer() {
+    if (reduceMotion) return;
+    timer = setInterval(() => goTo(index + 1), 6000);
+  }
+
+  function resetTimer() {
+    clearInterval(timer);
+    startTimer();
+  }
+
+  prevBtn.addEventListener("click", () => {
+    goTo(index - 1);
+    resetTimer();
+  });
+  nextBtn.addEventListener("click", () => {
+    goTo(index + 1);
+    resetTimer();
+  });
+  dots.forEach((d, di) =>
+    d.addEventListener("click", () => {
+      goTo(di);
+      resetTimer();
+    }),
+  );
+
+  root.addEventListener("mouseenter", () => clearInterval(timer));
+  root.addEventListener("mouseleave", startTimer);
+
+  render(0);
+  startTimer();
+</script>
