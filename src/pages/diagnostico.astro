@@ -1,0 +1,101 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import Button from "@/components/starwind/button/Button.astro";
+import Card from "@/components/starwind/card/Card.astro";
+import CardContent from "@/components/starwind/card/CardContent.astro";
+
+// TODO: el motor de diagnóstico automatizado de 8 preguntas se conecta en otra
+// etapa. Esta página es el "hook" de entrada — reemplazar CONTACT_PLACEHOLDER
+// por el email o WhatsApp real de contacto de Mexillum cuando esté definido.
+const CONTACT_PLACEHOLDER = "[correo o WhatsApp de contacto pendiente]";
+
+const pasos = [
+  {
+    n: "1",
+    title: "Contestás ocho preguntas",
+    body: "Sobre una planta específica: consumo, tarifa, criticidad del proceso. Nada de tu factura todavía.",
+  },
+  {
+    n: "2",
+    title: "Recibís un perfil de consumo",
+    body: "Con un rango estimado de ahorro y su aritmética visible — no una cifra sin sustento.",
+  },
+  {
+    n: "3",
+    title: "Vemos las palancas que aplican",
+    body: "Costo, continuidad, riesgo transferido o esquema sin CAPEX, priorizadas para tu caso.",
+  },
+];
+---
+
+<Layout
+  title="Diagnóstico de tu planta — Mexillum"
+  description="Ocho preguntas sobre una planta específica. Un perfil de consumo, un rango estimado de ahorro y las palancas de valor que aplican a tu caso."
+>
+  <main class="bg-background text-foreground min-h-screen">
+    <div class="mx-auto max-w-3xl px-6 py-24 sm:px-8">
+      <p class="font-mono text-xs tracking-[0.2em] text-primary uppercase sm:text-sm">
+        Diagnóstico de planta
+      </p>
+      <h1 class="mt-6 text-3xl leading-[1.1] font-semibold text-balance sm:text-4xl md:text-5xl">
+        Ocho preguntas. Un diagnóstico de tu planta.
+      </h1>
+      <p class="mt-6 max-w-xl text-lg text-foreground/80">
+        No te pedimos una cotización a ciegas. Medimos primero, con tus
+        propios datos, y te devolvemos algo de valor antes de pedirte nada
+        sensible.
+      </p>
+
+      <div class="mt-14 grid gap-5 sm:grid-cols-3">
+        {
+          pasos.map((p) => (
+            <Card class="rounded-md">
+              <CardContent>
+                <span class="font-mono text-sm text-primary">{p.n}</span>
+                <h2 class="mt-2 text-base font-semibold">{p.title}</h2>
+                <p class="mt-2 text-sm text-foreground/75">{p.body}</p>
+              </CardContent>
+            </Card>
+          ))
+        }
+      </div>
+
+      <div class="mt-16 border border-border rounded-md bg-card p-8">
+        <div class="flex items-center justify-between font-mono text-xs tracking-wide text-foreground/60 uppercase">
+          <span>Pregunta 1 de 8</span>
+          <span>Vista previa</span>
+        </div>
+        <p class="mt-5 text-xl font-medium text-balance sm:text-2xl">
+          ¿A qué se dedica principalmente la planta que querés diagnosticar?
+        </p>
+        <div class="mt-6 grid gap-3 sm:grid-cols-2">
+          {
+            [
+              "Manufactura / proceso continuo",
+              "Alimentos, bebidas o cadena de frío",
+              "Operación remota o con generación diésel",
+              "Otra actividad industrial o comercial",
+            ].map((opcion) => (
+              <div class="rounded-sm border border-border px-4 py-3 text-sm text-foreground/70">
+                {opcion}
+              </div>
+            ))
+          }
+        </div>
+        <p class="mt-6 text-sm text-foreground/50">
+          El motor interactivo se activa en la próxima etapa del sitio. Por
+          ahora, contactanos directamente para arrancar tu diagnóstico.
+        </p>
+      </div>
+
+      <div class="mt-10 flex flex-col items-start gap-3">
+        <Button as="a" href="#" variant="primary" size="lg">
+          Escribinos para empezar
+        </Button>
+        <p class="font-mono text-xs tracking-wide text-foreground/50">
+          {CONTACT_PLACEHOLDER}
+        </p>
+      </div>
+    </div>
+  </main>
+</Layout>

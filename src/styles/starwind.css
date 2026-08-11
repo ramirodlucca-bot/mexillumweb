@@ -1,0 +1,202 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@plugin "@tailwindcss/forms";
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --font-sans: "Barlow Semi Condensed", "Helvetica Neue", Arial, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+
+  --animate-accordion-down: accordion-down 0.2s ease-out;
+  --animate-accordion-up: accordion-up 0.2s ease-out;
+  --animate-reveal: reveal 0.6s ease-out both;
+
+  @keyframes reveal {
+    from {
+      opacity: 0;
+      transform: translateY(0.75rem);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes accordion-down {
+    from {
+      height: 0;
+    }
+    to {
+      height: var(--starwind-accordion-content-height);
+    }
+  }
+
+  @keyframes accordion-up {
+    from {
+      height: var(--starwind-accordion-content-height);
+    }
+    to {
+      height: 0;
+    }
+  }
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary-accent: var(--primary-accent);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary-accent: var(--secondary-accent);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-info: var(--info);
+  --color-info-foreground: var(--info-foreground);
+  --color-success: var(--success);
+  --color-success-foreground: var(--success-foreground);
+  --color-warning: var(--warning);
+  --color-warning-foreground: var(--warning-foreground);
+  --color-error: var(--error);
+  --color-error-foreground: var(--error-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-outline: var(--outline);
+
+  --radius-xs: calc(var(--radius) - 0.375rem);
+  --radius-sm: calc(var(--radius) - 0.25rem);
+  --radius-md: calc(var(--radius) - 0.125rem);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 0.25rem);
+  --radius-2xl: calc(var(--radius) + 0.5rem);
+  --radius-3xl: calc(var(--radius) + 1rem);
+
+  --color-sidebar: var(--sidebar-background);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-outline: var(--sidebar-outline);
+}
+
+:root {
+  /* Mexillum — modo claro: contenido denso, formularios */
+  --mex-deep: #0e1f16;
+  --mex-deep-alt: #1c3b28;
+  --mex-bright: #3ed17f;
+  --mex-accent-light: #1e9e5a;
+  --mex-cream: #f3f4ef;
+
+  --background: var(--mex-cream);
+  --foreground: var(--mex-deep);
+  --card: var(--color-white);
+  --card-foreground: var(--mex-deep);
+  --popover: var(--color-white);
+  --popover-foreground: var(--mex-deep);
+  --primary: var(--mex-accent-light);
+  --primary-foreground: var(--mex-cream);
+  --primary-accent: var(--mex-accent-light);
+  --secondary: var(--color-neutral-200);
+  --secondary-foreground: var(--mex-deep);
+  --secondary-accent: var(--mex-deep);
+  --muted: var(--color-neutral-100);
+  --muted-foreground: var(--color-neutral-600);
+  --accent: var(--color-neutral-100);
+  --accent-foreground: var(--mex-deep);
+  --info: var(--color-sky-300);
+  --info-foreground: var(--color-sky-950);
+  --success: var(--color-green-300);
+  --success-foreground: var(--color-green-950);
+  --warning: var(--color-amber-300);
+  --warning-foreground: var(--color-amber-950);
+  --error: var(--color-red-700);
+  --error-foreground: var(--color-neutral-50);
+  --border: var(--color-neutral-300);
+  --input: var(--color-neutral-200);
+  --outline: var(--color-neutral-400);
+  --radius: 0.375rem;
+
+  /* sidebar variables */
+  --sidebar-background: var(--color-neutral-50);
+  --sidebar-foreground: var(--mex-deep);
+  --sidebar-primary: var(--mex-accent-light);
+  --sidebar-primary-foreground: var(--mex-cream);
+  --sidebar-accent: var(--color-neutral-100);
+  --sidebar-accent-foreground: var(--mex-deep);
+  --sidebar-border: var(--color-neutral-200);
+  --sidebar-outline: var(--color-neutral-400);
+}
+
+.dark {
+  /* Mexillum — modo oscuro: hero, llamados a la acción */
+  --background: var(--mex-deep);
+  --foreground: var(--mex-cream);
+  --card: var(--mex-deep-alt);
+  --card-foreground: var(--mex-cream);
+  --popover: var(--mex-deep-alt);
+  --popover-foreground: var(--mex-cream);
+  --primary: var(--mex-bright);
+  --primary-foreground: var(--mex-deep);
+  --primary-accent: var(--mex-bright);
+  --secondary: var(--mex-deep-alt);
+  --secondary-foreground: var(--mex-cream);
+  --secondary-accent: var(--mex-cream);
+  --muted: var(--mex-deep-alt);
+  --muted-foreground: color-mix(in oklch, var(--mex-cream) 65%, transparent);
+  --accent: var(--mex-deep-alt);
+  --accent-foreground: var(--mex-cream);
+  --info: var(--color-sky-300);
+  --info-foreground: var(--color-sky-950);
+  --success: var(--color-green-300);
+  --success-foreground: var(--color-green-950);
+  --warning: var(--color-amber-300);
+  --warning-foreground: var(--color-amber-950);
+  --error: var(--color-red-400);
+  --error-foreground: var(--mex-deep);
+  --border: color-mix(in oklch, var(--mex-cream) 15%, transparent);
+  --input: color-mix(in oklch, var(--mex-cream) 15%, transparent);
+  --outline: color-mix(in oklch, var(--mex-cream) 40%, transparent);
+
+  /* sidebars variables */
+  --sidebar-background: var(--mex-deep-alt);
+  --sidebar-foreground: var(--mex-cream);
+  --sidebar-primary: var(--mex-bright);
+  --sidebar-primary-foreground: var(--mex-deep);
+  --sidebar-accent: var(--mex-deep-alt);
+  --sidebar-accent-foreground: var(--mex-cream);
+  --sidebar-border: color-mix(in oklch, var(--mex-cream) 15%, transparent);
+  --sidebar-outline: color-mix(in oklch, var(--mex-cream) 40%, transparent);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-outline/50;
+  }
+  body {
+    @apply bg-background text-foreground font-sans scheme-light dark:scheme-dark;
+  }
+  button {
+    @apply cursor-pointer;
+  }
+}
+
+[data-reveal],
+[data-reveal-item] {
+  opacity: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-reveal],
+  [data-reveal-item] {
+    opacity: 1;
+  }
+}

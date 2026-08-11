@@ -1,0 +1,71 @@
+---
+const pasos = [
+  {
+    n: "01",
+    title: "Diagnóstico web",
+    body: "Ocho preguntas sobre tu planta. Un primer perfil de consumo, en minutos.",
+  },
+  {
+    n: "02",
+    title: "Llamada de consulta",
+    body: "Sin costo. Revisamos el diagnóstico y confirmamos si hay una oportunidad real.",
+  },
+  {
+    n: "03",
+    title: "Medición",
+    body: "Instrumentamos tu instalación para tener datos propios, no supuestos de catálogo.",
+  },
+  {
+    n: "04",
+    title: "Dimensionamiento",
+    body: "El sistema se diseña para tu perfil de carga real, no para un estándar de la industria.",
+  },
+  {
+    n: "05",
+    title: "Propuesta",
+    body: "Una propuesta técnica y comercial, con la aritmética visible.",
+  },
+  {
+    n: "06",
+    title: "Construcción",
+    body: "Procura, obra y puesta en marcha, bajo nuestra ingeniería.",
+  },
+  {
+    n: "07",
+    title: "Operación",
+    body: "Operación y mantenimiento durante la vida útil del sistema. El desempeño sigue siendo nuestra responsabilidad.",
+  },
+];
+---
+
+<section class="bg-background text-foreground border-b border-border">
+  <div class="mx-auto max-w-4xl px-6 py-24 sm:px-8">
+    <p
+      data-reveal
+      class="font-mono text-xs tracking-[0.2em] text-primary uppercase sm:text-sm"
+    >
+      Cómo trabajamos
+    </p>
+    <h2
+      data-reveal
+      class="mt-6 max-w-2xl text-3xl leading-[1.1] font-semibold text-balance sm:text-4xl"
+    >
+      Un solo responsable, de punta a punta
+    </h2>
+    <p data-reveal class="mt-6 max-w-xl text-lg text-foreground/80">
+      No coordinás proveedores. Coordinás una sola llamada.
+    </p>
+
+    <ol data-reveal-group class="mt-14 divide-y divide-border border-t border-border">
+      {
+        pasos.map((p) => (
+          <li data-reveal-item class="grid grid-cols-[3rem_1fr] gap-6 py-6 sm:grid-cols-[4rem_10rem_1fr] sm:items-baseline">
+            <span class="font-mono text-sm text-primary">{p.n}</span>
+            <h3 class="text-lg font-semibold">{p.title}</h3>
+            <p class="text-base text-foreground/75 sm:col-start-3">{p.body}</p>
+          </li>
+        ))
+      }
+    </ol>
+  </div>
+</section>

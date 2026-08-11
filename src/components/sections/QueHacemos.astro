@@ -1,0 +1,47 @@
+---
+import Card from "@/components/starwind/card/Card.astro";
+import CardContent from "@/components/starwind/card/CardContent.astro";
+
+const ofertas = [
+  {
+    label: "Almacenamiento (BESS)",
+    body: "Respaldo y control de consumo en el punto donde ocurre el costo o el riesgo. Reduce cargos por demanda, cubre huecos de tensión, sostiene la operación cuando la red falla.",
+  },
+  {
+    label: "Generación solar",
+    body: "Cuando el diagnóstico lo justifica, sumamos generación propia dimensionada al perfil real de consumo de la instalación — no como paquete estándar.",
+  },
+];
+---
+
+<section class="bg-background text-foreground border-b border-border">
+  <div class="mx-auto max-w-5xl px-6 py-24 sm:px-8">
+    <h2
+      data-reveal
+      class="max-w-2xl text-3xl leading-[1.1] font-semibold text-balance sm:text-4xl"
+    >
+      Almacenamiento. Generación. Lo que el diagnóstico indique.
+    </h2>
+    <p data-reveal class="mt-6 max-w-2xl text-lg text-foreground/80">
+      Diseñamos, financiamos, construimos y operamos sistemas de energía
+      dimensionados para una instalación específica — no para un catálogo.
+      El punto de partida siempre es el mismo: medir cómo consume esa planta
+      antes de proponer qué construirle.
+    </p>
+
+    <div data-reveal-group class="mt-12 grid gap-5 sm:grid-cols-2">
+      {
+        ofertas.map((o) => (
+          <Card data-reveal-item class="rounded-md">
+            <CardContent>
+              <p class="font-mono text-xs tracking-[0.15em] text-primary uppercase">
+                {o.label}
+              </p>
+              <p class="mt-3 text-base text-foreground/80">{o.body}</p>
+            </CardContent>
+          </Card>
+        ))
+      }
+    </div>
+  </div>
+</section>

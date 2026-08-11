@@ -1,0 +1,29 @@
+---
+import Button from "@/components/starwind/button/Button.astro";
+---
+
+<section class="dark bg-background text-foreground">
+  <div class="mx-auto max-w-3xl px-6 py-28 text-center sm:px-8">
+    <h2
+      data-reveal
+      class="text-3xl leading-[1.1] font-semibold text-balance sm:text-4xl md:text-5xl"
+    >
+      ¿Ya mediste cuánto te cuesta tu pico de demanda?
+    </h2>
+
+    <p data-reveal class="mx-auto mt-6 max-w-xl text-lg text-foreground/80">
+      Ocho preguntas sobre una planta específica. Te devolvemos un perfil de
+      consumo, un rango estimado de ahorro con su aritmética visible, y las
+      palancas que aplican a tu caso.
+    </p>
+
+    <div data-reveal class="mt-10 flex flex-col items-center gap-3">
+      <Button as="a" href="/diagnostico" variant="primary" size="lg">
+        Empezar diagnóstico
+      </Button>
+      <p class="font-mono text-xs tracking-wide text-foreground/60">
+        Sin compromiso. Sin pedirte la factura todavía.
+      </p>
+    </div>
+  </div>
+</section>

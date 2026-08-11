@@ -1,0 +1,61 @@
+---
+import Card from "@/components/starwind/card/Card.astro";
+import CardContent from "@/components/starwind/card/CardContent.astro";
+
+const sectores = [
+  {
+    title: "Ya tenés generación propia",
+    body: "Tenés solar o un PPA y seguís pagando caro. Te mostramos lo que falta, no lo que ya resolviste.",
+  },
+  {
+    title: "Proceso continuo",
+    body: "Una caída de milisegundos te arruina un lote o te detiene una línea 24 horas. Medimos el costo del paro, no el costo del kWh.",
+  },
+  {
+    title: "Alimentos, bebidas y cadena de frío",
+    body: "Cargo por demanda alto y producto perecedero en riesgo. Un ahorro recurrente que además protege lo que tenés en cámara.",
+  },
+  {
+    title: "Operaciones remotas",
+    body: "Red débil o generación con diésel a costo altísimo. Desplazar ese combustible es un múltiplo, no un porcentaje.",
+  },
+  {
+    title: "Sector público",
+    body: "Necesitás la solución y no tenés presupuesto de inversión. Te mostramos un esquema de servicio, no una compra de activo.",
+  },
+  {
+    title: "Grupos con capital disponible",
+    body: "No tenés problema de dinero, tenés problema de foco. Tu capital va a tu negocio; el riesgo del activo es nuestro.",
+  },
+];
+---
+
+<section class="bg-background text-foreground border-b border-border">
+  <div class="mx-auto max-w-5xl px-6 py-24 sm:px-8">
+    <p
+      data-reveal
+      class="font-mono text-xs tracking-[0.2em] text-primary uppercase sm:text-sm"
+    >
+      Por sector
+    </p>
+    <h2
+      data-reveal
+      class="mt-6 max-w-2xl text-3xl leading-[1.1] font-semibold text-balance sm:text-4xl"
+    >
+      Cada operación tiene su propio punto de fuga
+    </h2>
+
+    <div data-reveal-group class="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+      {
+        sectores.map((s) => (
+          <Card data-reveal-item class="rounded-md">
+            <CardContent>
+              <h3 class="text-lg font-semibold">{s.title}</h3>
+              <p class="mt-2 text-sm text-foreground/75">{s.body}</p>
+            </CardContent>
+          </Card>
+        ))
+      }
+    </div>
+  </div>
+</section>
