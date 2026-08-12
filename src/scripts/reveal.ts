@@ -1,6 +1,8 @@
 import { animate, inView, stagger } from "motion";
 
 export function initReveal(): void {
+  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
   inView(
     "[data-reveal]",
     (element) => {

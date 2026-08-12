@@ -1,4 +1,6 @@
 ---
+import SectionHeader from "@/components/SectionHeader.astro";
+
 const pasos = [
   {
     n: "01",
@@ -40,18 +42,9 @@ const pasos = [
 
 <section class="bg-background text-foreground border-b border-border">
   <div class="mx-auto max-w-4xl px-6 py-24 sm:px-8">
-    <p
-      data-reveal
-      class="font-mono text-xs tracking-[0.2em] text-primary uppercase sm:text-sm"
-    >
-      Cómo trabajamos
-    </p>
-    <h2
-      data-reveal
-      class="mt-6 max-w-2xl text-3xl leading-[1.1] font-semibold text-balance sm:text-4xl"
-    >
+    <SectionHeader kicker="Cómo trabajamos">
       Un solo contrato, un solo interlocutor
-    </h2>
+    </SectionHeader>
     <p data-reveal class="mt-6 max-w-xl text-lg text-foreground/80">
       No coordinás proveedores. Coordinás una sola llamada.
     </p>

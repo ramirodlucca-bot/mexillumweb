@@ -1,0 +1,30 @@
+---
+interface Props {
+  kicker?: string;
+  /** "lg" adds the extra md:text-5xl step used by a couple of sections. */
+  size?: "md" | "lg";
+}
+
+const { kicker, size = "md" } = Astro.props;
+---
+
+{
+  kicker && (
+    <p
+      data-reveal
+      class="font-mono text-xs tracking-[0.2em] text-primary uppercase sm:text-sm"
+    >
+      {kicker}
+    </p>
+  )
+}
+<h2
+  data-reveal
+  class:list={[
+    "max-w-2xl text-3xl leading-[1.1] font-semibold text-balance sm:text-4xl",
+    kicker && "mt-6",
+    size === "lg" && "md:text-5xl",
+  ]}
+>
+  <slot />
+</h2>

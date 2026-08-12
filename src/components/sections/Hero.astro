@@ -4,7 +4,7 @@ import Button from "@/components/starwind/button/Button.astro";
 // Carrusel de 3 mensajes (direcciones A/B/C), cada uno con su propia foto.
 // Las tres son de instalaciones solares por ahora — cuando haya fotos de
 // BESS/plantas industriales, son mejor match temático para B y C.
-const slides = [
+export const slides = [
   {
     kicker: "Almacenamiento y generación de energía para industria",
     headline:
@@ -56,15 +56,19 @@ const slides = [
         class="font-mono text-xs tracking-[0.2em] text-primary uppercase sm:text-sm"
         data-hero-kicker
       >
+        {slides[0].kicker}
       </p>
 
       <h1
         class="mt-6 max-w-4xl text-4xl leading-[1.08] font-semibold text-balance sm:text-5xl md:text-6xl"
         data-hero-headline
       >
+        {slides[0].headline}
       </h1>
 
-      <p class="mt-8 max-w-2xl text-lg text-foreground/80 sm:text-xl" data-hero-subhead></p>
+      <p class="mt-8 max-w-2xl text-lg text-foreground/80 sm:text-xl" data-hero-subhead>
+        {slides[0].subhead}
+      </p>
 
       <div class="mt-10">
         <Button as="a" href="/diagnostico" variant="primary" size="lg">
@@ -110,7 +114,7 @@ const slides = [
 </section>
 
 <script define:vars={{ slides }}>
-  const root = document.currentScript.previousElementSibling;
+  const root = document.querySelector("[data-hero-carousel]");
   const bg = root.querySelector("[data-hero-bg]");
   const content = root.querySelector("[data-hero-content]");
   const kickerEl = root.querySelector("[data-hero-kicker]");
@@ -144,7 +148,7 @@ const slides = [
       render(index);
       bg.classList.remove("opacity-0");
       content.classList.remove("opacity-0");
-    }, 350);
+    }, 500);
   }
 
   const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -175,7 +179,7 @@ const slides = [
   );
 
   root.addEventListener("mouseenter", () => clearInterval(timer));
-  root.addEventListener("mouseleave", startTimer);
+  root.addEventListener("mouseleave", resetTimer);
 
   render(0);
   startTimer();

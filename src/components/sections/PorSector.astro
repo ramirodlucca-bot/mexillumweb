@@ -1,4 +1,5 @@
 ---
+import SectionHeader from "@/components/SectionHeader.astro";
 import Card from "@/components/starwind/card/Card.astro";
 import CardContent from "@/components/starwind/card/CardContent.astro";
 
@@ -32,18 +33,9 @@ const sectores = [
 
 <section class="bg-background text-foreground border-b border-border">
   <div class="mx-auto max-w-5xl px-6 py-24 sm:px-8">
-    <p
-      data-reveal
-      class="font-mono text-xs tracking-[0.2em] text-primary uppercase sm:text-sm"
-    >
-      Por sector
-    </p>
-    <h2
-      data-reveal
-      class="mt-6 max-w-2xl text-3xl leading-[1.1] font-semibold text-balance sm:text-4xl"
-    >
+    <SectionHeader kicker="Por sector">
       Cada operación tiene su propio punto de fuga
-    </h2>
+    </SectionHeader>
 
     <div data-reveal-group class="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
       {

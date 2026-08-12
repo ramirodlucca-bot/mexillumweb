@@ -1,4 +1,6 @@
 ---
+import SectionHeader from "@/components/SectionHeader.astro";
+
 const palancas = [
   {
     n: "01",
@@ -25,18 +27,9 @@ const palancas = [
 
 <section class="dark bg-background text-foreground border-b border-border">
   <div class="mx-auto max-w-5xl px-6 py-24 sm:px-8">
-    <p
-      data-reveal
-      class="font-mono text-xs tracking-[0.2em] text-primary uppercase sm:text-sm"
-    >
-      Las cuatro palancas
-    </p>
-    <h2
-      data-reveal
-      class="mt-6 max-w-2xl text-3xl leading-[1.1] font-semibold text-balance sm:text-4xl"
-    >
+    <SectionHeader kicker="Las cuatro palancas">
       Cuatro maneras de proteger el EBITDA de tu operación
-    </h2>
+    </SectionHeader>
 
     <div data-reveal-group class="mt-14 grid gap-px overflow-hidden rounded-md border border-border bg-border sm:grid-cols-2">
       {

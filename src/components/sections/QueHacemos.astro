@@ -1,4 +1,5 @@
 ---
+import SectionHeader from "@/components/SectionHeader.astro";
 import Card from "@/components/starwind/card/Card.astro";
 import CardContent from "@/components/starwind/card/CardContent.astro";
 
@@ -16,12 +17,7 @@ const ofertas = [
 
 <section class="bg-background text-foreground border-b border-border">
   <div class="mx-auto max-w-5xl px-6 py-24 sm:px-8">
-    <h2
-      data-reveal
-      class="max-w-2xl text-3xl leading-[1.1] font-semibold text-balance sm:text-4xl"
-    >
-      Almacenamiento. Generación. Lo que el diagnóstico indique.
-    </h2>
+    <SectionHeader>Almacenamiento. Generación. Lo que el diagnóstico indique.</SectionHeader>
     <p data-reveal class="mt-6 max-w-2xl text-lg text-foreground/80">
       Diseñamos, financiamos, construimos y operamos sistemas de energía
       dimensionados para una instalación específica — no para un catálogo.

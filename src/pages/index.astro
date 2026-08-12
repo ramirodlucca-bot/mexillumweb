@@ -1,6 +1,6 @@
 ---
 import Layout from "@/layouts/Layout.astro";
-import Hero from "@/components/sections/Hero.astro";
+import Hero, { slides as heroSlides } from "@/components/sections/Hero.astro";
 import Problema from "@/components/sections/Problema.astro";
 import QueHacemos from "@/components/sections/QueHacemos.astro";
 import Palancas from "@/components/sections/Palancas.astro";
@@ -13,6 +13,7 @@ import CierreFormulario from "@/components/sections/CierreFormulario.astro";
 <Layout
   title="Mexillum — Almacenamiento y generación de energía para industria"
   description="Mexillum diseña, financia, construye y opera sistemas de almacenamiento de energía (BESS) y generación solar que protegen el EBITDA de operaciones industriales, comerciales y del sector público en México."
+  preloadImage={heroSlides[0].image}
 >
   <main>
     <Hero />
