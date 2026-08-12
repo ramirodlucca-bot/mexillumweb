@@ -1,31 +1,20 @@
 ---
 import Layout from "@/layouts/Layout.astro";
 import Button from "@/components/starwind/button/Button.astro";
-import Card from "@/components/starwind/card/Card.astro";
-import CardContent from "@/components/starwind/card/CardContent.astro";
+import SectionHeader from "@/components/SectionHeader.astro";
 
-// TODO: el motor de diagnóstico automatizado de 8 preguntas se conecta en otra
-// etapa. Esta página es el "hook" de entrada — reemplazar CONTACT_PLACEHOLDER
-// por el email o WhatsApp real de contacto de Mexillum cuando esté definido.
-const CONTACT_PLACEHOLDER = "[correo o WhatsApp de contacto pendiente]";
+export const prerender = true;
 
-const pasos = [
-  {
-    n: "1",
-    title: "Contestás ocho preguntas",
-    body: "Sobre una planta específica: consumo, tarifa, criticidad del proceso. Nada de tu factura todavía.",
-  },
-  {
-    n: "2",
-    title: "Recibís un perfil de consumo",
-    body: "Con un rango estimado de ahorro y su aritmética visible — no una cifra sin sustento.",
-  },
-  {
-    n: "3",
-    title: "Vemos las palancas que aplican",
-    body: "Costo, continuidad, riesgo transferido o esquema sin CAPEX, priorizadas para tu caso.",
-  },
+const ESTADOS = [
+  "Aguascalientes", "Baja California", "Baja California Sur", "Campeche",
+  "Chiapas", "Chihuahua", "Ciudad de México", "Coahuila", "Colima", "Durango",
+  "Estado de México", "Guanajuato", "Guerrero", "Hidalgo", "Jalisco",
+  "Michoacán", "Morelos", "Nayarit", "Nuevo León", "Oaxaca", "Puebla",
+  "Querétaro", "Quintana Roo", "San Luis Potosí", "Sinaloa", "Sonora",
+  "Tabasco", "Tamaulipas", "Tlaxcala", "Veracruz", "Yucatán", "Zacatecas",
 ];
+
+const TOTAL_PREGUNTAS = 8;
 ---
 
 <Layout
@@ -33,69 +22,278 @@ const pasos = [
   description="Ocho preguntas sobre una planta específica. Un perfil de consumo, un rango estimado de ahorro y las palancas de valor que aplican a tu caso."
 >
   <main class="bg-background text-foreground min-h-screen">
-    <div class="mx-auto max-w-3xl px-6 py-24 sm:px-8">
-      <p class="font-mono text-xs tracking-[0.2em] text-primary uppercase sm:text-sm">
-        Diagnóstico de planta
-      </p>
-      <h1 class="mt-6 text-3xl leading-[1.1] font-semibold text-balance sm:text-4xl md:text-5xl">
+    <div class="mx-auto max-w-2xl px-6 py-24 sm:px-8">
+      <SectionHeader kicker="Diagnóstico de planta">
         Ocho preguntas. Un diagnóstico de tu planta.
-      </h1>
-      <p class="mt-6 max-w-xl text-lg text-foreground/80">
+      </SectionHeader>
+      <p class="mt-6 max-w-xl text-lg text-foreground/80" data-diagnostico-intro>
         No te pedimos una cotización a ciegas. Medimos primero, con tus
         propios datos, y te devolvemos algo de valor antes de pedirte nada
         sensible.
       </p>
 
-      <div class="mt-14 grid gap-5 sm:grid-cols-3">
-        {
-          pasos.map((p) => (
-            <Card class="rounded-md">
-              <CardContent>
-                <span class="font-mono text-sm text-primary">{p.n}</span>
-                <h2 class="mt-2 text-base font-semibold">{p.title}</h2>
-                <p class="mt-2 text-sm text-foreground/75">{p.body}</p>
-              </CardContent>
-            </Card>
-          ))
-        }
-      </div>
-
-      <div class="mt-16 border border-border rounded-md bg-card p-8">
-        <div class="flex items-center justify-between font-mono text-xs tracking-wide text-foreground/60 uppercase">
-          <span>Pregunta 1 de 8</span>
-          <span>Vista previa</span>
+      <form data-diagnostico-form class="mt-14" novalidate>
+        <div
+          data-progress
+          class="mb-6 flex items-center justify-between font-mono text-xs tracking-wide text-foreground/50 uppercase"
+        >
+          <span data-progress-label>Pregunta 1 de {TOTAL_PREGUNTAS}</span>
         </div>
-        <p class="mt-5 text-xl font-medium text-balance sm:text-2xl">
-          ¿A qué se dedica principalmente la planta que querés diagnosticar?
-        </p>
-        <div class="mt-6 grid gap-3 sm:grid-cols-2">
-          {
-            [
-              "Manufactura / proceso continuo",
-              "Alimentos, bebidas o cadena de frío",
-              "Operación remota o con generación diésel",
-              "Otra actividad industrial o comercial",
-            ].map((opcion) => (
-              <div class="rounded-sm border border-border px-4 py-3 text-sm text-foreground/70">
-                {opcion}
-              </div>
-            ))
-          }
-        </div>
-        <p class="mt-6 text-sm text-foreground/50">
-          El motor interactivo se activa en la próxima etapa del sitio. Por
-          ahora, contactanos directamente para arrancar tu diagnóstico.
-        </p>
-      </div>
 
-      <div class="mt-10 flex flex-col items-start gap-3">
-        <Button as="a" variant="primary" size="lg" disabled>
-          Escribinos para empezar
-        </Button>
-        <p class="font-mono text-xs tracking-wide text-foreground/50">
-          Contacto en configuración — por ahora: {CONTACT_PLACEHOLDER}
-        </p>
+        <div class="rounded-md border border-border bg-card p-8">
+          <!-- Paso 1 -->
+          <fieldset data-step="1">
+            <legend class="text-xl font-medium text-balance sm:text-2xl">
+              ¿A qué se dedica principalmente la planta que querés diagnosticar?
+            </legend>
+            <div class="mt-6 grid gap-3 sm:grid-cols-2">
+              {
+                [
+                  ["manufactura", "Manufactura / proceso continuo"],
+                  ["alimentos", "Alimentos, bebidas o cadena de frío"],
+                  ["remota", "Operación remota o con generación diésel"],
+                  ["publico", "Sector público"],
+                  ["otra", "Otra actividad industrial o comercial"],
+                ].map(([value, label]) => (
+                  <label class="flex cursor-pointer items-center gap-3 rounded-sm border border-border px-4 py-3 text-sm text-foreground/80 has-[:checked]:border-primary has-[:checked]:text-foreground">
+                    <input type="radio" name="sector" value={value} class="accent-primary" required />
+                    {label}
+                  </label>
+                ))
+              }
+            </div>
+          </fieldset>
+
+          <!-- Paso 2 -->
+          <fieldset data-step="2" hidden>
+            <legend class="text-xl font-medium text-balance sm:text-2xl">
+              ¿En qué estado opera la planta?
+            </legend>
+            <select
+              name="estado"
+              required
+              class="mt-6 w-full rounded-sm border border-border bg-background px-4 py-3 text-sm text-foreground/80"
+            >
+              <option value="" disabled selected>Elegí un estado</option>
+              {ESTADOS.map((e) => <option value={e}>{e}</option>)}
+            </select>
+          </fieldset>
+
+          <!-- Paso 3 -->
+          <fieldset data-step="3" hidden>
+            <legend class="text-xl font-medium text-balance sm:text-2xl">
+              ¿La planta ya cuenta con generación solar propia o un PPA?
+            </legend>
+            <div class="mt-6 grid grid-cols-2 gap-3">
+              {
+                [
+                  ["si", "Sí"],
+                  ["no", "No"],
+                ].map(([value, label]) => (
+                  <label class="flex cursor-pointer items-center justify-center gap-3 rounded-sm border border-border px-4 py-3 text-sm text-foreground/80 has-[:checked]:border-primary has-[:checked]:text-foreground">
+                    <input type="radio" name="yaGenera" value={value} class="accent-primary" required />
+                    {label}
+                  </label>
+                ))
+              }
+            </div>
+          </fieldset>
+
+          <!-- Paso 4 -->
+          <fieldset data-step="4" hidden>
+            <legend class="text-xl font-medium text-balance sm:text-2xl">
+              ¿Cuál es la demanda contratada o el pico de demanda aproximado de la planta?
+            </legend>
+            <p class="mt-2 text-sm text-foreground/60">
+              En kW. Si no lo sabés exacto, un estimado sirve — lo confirmamos en la medición.
+            </p>
+            <div class="mt-6 flex items-center gap-3">
+              <input
+                type="number"
+                name="demandaPicoKW"
+                min="1"
+                step="1"
+                required
+                placeholder="Ej: 250"
+                class="w-full rounded-sm border border-border bg-background px-4 py-3 text-sm text-foreground/80"
+              />
+              <span class="font-mono text-sm text-foreground/50">kW</span>
+            </div>
+          </fieldset>
+
+          <!-- Paso 5 -->
+          <fieldset data-step="5" hidden>
+            <legend class="text-xl font-medium text-balance sm:text-2xl">
+              ¿Cuántas horas al día y en cuántos turnos opera la planta?
+            </legend>
+            <div class="mt-6 grid grid-cols-2 gap-4">
+              <label class="text-sm text-foreground/70">
+                Horas por día
+                <input
+                  type="number"
+                  name="horasPorDia"
+                  min="1"
+                  max="24"
+                  required
+                  placeholder="Ej: 16"
+                  class="mt-2 w-full rounded-sm border border-border bg-background px-4 py-3 text-sm text-foreground/80"
+                />
+              </label>
+              <label class="text-sm text-foreground/70">
+                Turnos
+                <input
+                  type="number"
+                  name="turnos"
+                  min="1"
+                  max="3"
+                  required
+                  placeholder="Ej: 2"
+                  class="mt-2 w-full rounded-sm border border-border bg-background px-4 py-3 text-sm text-foreground/80"
+                />
+              </label>
+            </div>
+          </fieldset>
+
+          <!-- Paso 6 -->
+          <fieldset data-step="6" hidden>
+            <legend class="text-xl font-medium text-balance sm:text-2xl">
+              Si la energía falla unos segundos, ¿qué tan grave es para tu operación?
+            </legend>
+            <div class="mt-6 flex flex-col gap-3">
+              {
+                [
+                  ["sin_impacto", "Sin impacto real"],
+                  ["pierdo_producto", "Pierdo producto o tiempo de proceso"],
+                  ["paro_linea", "Se me para una línea completa"],
+                ].map(([value, label]) => (
+                  <label class="flex cursor-pointer items-center gap-3 rounded-sm border border-border px-4 py-3 text-sm text-foreground/80 has-[:checked]:border-primary has-[:checked]:text-foreground">
+                    <input type="radio" name="criticidad" value={value} class="accent-primary" required />
+                    {label}
+                  </label>
+                ))
+              }
+            </div>
+          </fieldset>
+
+          <!-- Paso 7 -->
+          <fieldset data-step="7" hidden>
+            <legend class="text-xl font-medium text-balance sm:text-2xl">
+              ¿Hoy tenés generador de respaldo a diésel?
+            </legend>
+            <div class="mt-6 grid grid-cols-2 gap-3">
+              {
+                [
+                  ["si", "Sí"],
+                  ["no", "No"],
+                ].map(([value, label]) => (
+                  <label class="flex cursor-pointer items-center justify-center gap-3 rounded-sm border border-border px-4 py-3 text-sm text-foreground/80 has-[:checked]:border-primary has-[:checked]:text-foreground">
+                    <input type="radio" name="tieneDiesel" value={value} class="accent-primary" required />
+                    {label}
+                  </label>
+                ))
+              }
+            </div>
+          </fieldset>
+
+          <!-- Paso 8 -->
+          <fieldset data-step="8" hidden>
+            <legend class="text-xl font-medium text-balance sm:text-2xl">
+              ¿Cuál es aproximadamente tu gasto mensual en electricidad?
+            </legend>
+            <p class="mt-2 text-sm text-foreground/60">
+              Opcional. En pesos mexicanos. Si no lo tenés a mano, seguí sin
+              contestar.
+            </p>
+            <div class="mt-6 flex items-center gap-3">
+              <span class="font-mono text-sm text-foreground/50">$</span>
+              <input
+                type="number"
+                name="gastoMensualMXN"
+                min="0"
+                step="1000"
+                placeholder="Ej: 350000"
+                class="w-full rounded-sm border border-border bg-background px-4 py-3 text-sm text-foreground/80"
+              />
+              <span class="font-mono text-sm text-foreground/50">MXN</span>
+            </div>
+          </fieldset>
+
+          <div class="mt-8 flex items-center justify-between">
+            <Button type="button" as="button" variant="ghost" size="sm" data-diagnostico-prev>
+              Atrás
+            </Button>
+            <Button type="button" as="button" variant="primary" size="md" data-diagnostico-next>
+              Siguiente
+            </Button>
+          </div>
+        </div>
+      </form>
+
+      <!-- Resultado -->
+      <div data-resultado hidden class="mt-14">
+        <h2 class="text-2xl font-semibold text-balance sm:text-3xl">Tu perfil de consumo</h2>
+        <div class="mt-6 rounded-md border border-border bg-card p-8">
+          <p class="font-mono text-xs tracking-wide text-foreground/50 uppercase">
+            Cálculo de referencia
+          </p>
+          <p class="mt-4 text-base text-foreground/85" data-resultado-desglose></p>
+          <p class="mt-4 text-3xl font-semibold" data-resultado-rango></p>
+          <p class="mt-2 text-sm text-foreground/60" data-resultado-porcentaje></p>
+          <p class="mt-6 text-sm text-foreground/50" data-resultado-nota-generacion></p>
+        </div>
+
+        <div class="mt-6 rounded-md border border-border bg-card p-8">
+          <p class="font-mono text-xs tracking-wide text-foreground/50 uppercase">
+            Palancas priorizadas para tu caso
+          </p>
+          <ol class="mt-4 space-y-2 text-base text-foreground/85" data-resultado-palancas></ol>
+        </div>
+
+        <div class="mt-10 rounded-md border border-border bg-card p-8">
+          <h3 class="text-lg font-semibold">Agendá tu llamada de consulta</h3>
+          <p class="mt-2 text-sm text-foreground/70">
+            Sin costo. Dejanos tus datos y te contactamos para revisar el
+            diagnóstico juntos.
+          </p>
+          <form data-contacto-form class="mt-6 space-y-4" novalidate>
+            <label class="block text-sm text-foreground/70">
+              Nombre
+              <input
+                type="text"
+                name="nombre"
+                required
+                class="mt-2 w-full rounded-sm border border-border bg-background px-4 py-3 text-sm text-foreground/80"
+              />
+            </label>
+            <label class="block text-sm text-foreground/70">
+              Email
+              <input
+                type="email"
+                name="email"
+                required
+                class="mt-2 w-full rounded-sm border border-border bg-background px-4 py-3 text-sm text-foreground/80"
+              />
+            </label>
+            <label class="block text-sm text-foreground/70">
+              Teléfono (opcional)
+              <input
+                type="tel"
+                name="telefono"
+                class="mt-2 w-full rounded-sm border border-border bg-background px-4 py-3 text-sm text-foreground/80"
+              />
+            </label>
+            <Button type="submit" as="button" variant="primary" size="lg" data-contacto-submit>
+              Enviar y agendar
+            </Button>
+            <p data-contacto-status class="text-sm text-foreground/60" role="status"></p>
+          </form>
+        </div>
       </div>
     </div>
   </main>
 </Layout>
+
+<script>
+  import { initDiagnosticoForm } from "@/scripts/diagnostico-form";
+  initDiagnosticoForm();
+</script>
