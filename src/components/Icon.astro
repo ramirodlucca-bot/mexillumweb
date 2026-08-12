@@ -1,0 +1,36 @@
+---
+// Íconos de línea de @tabler/icons (ya viene con Starwind, cero deps nuevas).
+// Solo se importan los que realmente se usan en el sitio.
+import coin from "@tabler/icons/outline/coin.svg?raw";
+import bolt from "@tabler/icons/outline/bolt.svg?raw";
+import shieldCheck from "@tabler/icons/outline/shield-check.svg?raw";
+import walletOff from "@tabler/icons/outline/wallet-off.svg?raw";
+import sun from "@tabler/icons/outline/sun.svg?raw";
+import activity from "@tabler/icons/outline/activity.svg?raw";
+import snowflake from "@tabler/icons/outline/snowflake.svg?raw";
+import route from "@tabler/icons/outline/route.svg?raw";
+import buildingBank from "@tabler/icons/outline/building-bank.svg?raw";
+import briefcase from "@tabler/icons/outline/briefcase.svg?raw";
+
+const icons = {
+  coin,
+  bolt,
+  "shield-check": shieldCheck,
+  "wallet-off": walletOff,
+  sun,
+  activity,
+  snowflake,
+  route,
+  "building-bank": buildingBank,
+  briefcase,
+} as const;
+
+interface Props {
+  name: keyof typeof icons;
+  class?: string;
+}
+
+const { name, class: className = "size-5" } = Astro.props;
+---
+
+<span class:list={["inline-flex shrink-0 [&>svg]:h-full [&>svg]:w-full", className]} set:html={icons[name]} />

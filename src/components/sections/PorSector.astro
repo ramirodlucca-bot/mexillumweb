@@ -2,29 +2,36 @@
 import SectionHeader from "@/components/SectionHeader.astro";
 import Card from "@/components/starwind/card/Card.astro";
 import CardContent from "@/components/starwind/card/CardContent.astro";
+import Icon from "@/components/Icon.astro";
 
 const sectores = [
   {
+    icon: "sun" as const,
     title: "Ya tenés generación propia",
     body: "Tenés solar o un PPA y seguís pagando caro. Te mostramos lo que falta, no lo que ya resolviste.",
   },
   {
+    icon: "activity" as const,
     title: "Proceso continuo",
     body: "Una caída de milisegundos te arruina un lote o te detiene una línea 24 horas. Medimos el costo del paro, no el costo del kWh.",
   },
   {
+    icon: "snowflake" as const,
     title: "Alimentos, bebidas y cadena de frío",
     body: "Cargo por demanda alto y producto perecedero en riesgo. Un ahorro recurrente que además protege lo que tenés en cámara.",
   },
   {
+    icon: "route" as const,
     title: "Operaciones remotas",
     body: "Red débil o generación con diésel a costo altísimo. Desplazar ese combustible es un múltiplo, no un porcentaje.",
   },
   {
+    icon: "building-bank" as const,
     title: "Sector público",
     body: "Necesitás la solución y no tenés presupuesto de inversión. Te mostramos un esquema de servicio, no una compra de activo.",
   },
   {
+    icon: "briefcase" as const,
     title: "Grupos con capital disponible",
     body: "No tenés problema de dinero, tenés problema de foco. Tu capital va a tu negocio; el riesgo del activo es nuestro.",
   },
@@ -42,7 +49,8 @@ const sectores = [
         sectores.map((s) => (
           <Card data-reveal-item class="rounded-md">
             <CardContent>
-              <h3 class="text-lg font-semibold">{s.title}</h3>
+              <Icon name={s.icon} class="size-6 text-primary" />
+              <h3 class="mt-3 text-lg font-semibold">{s.title}</h3>
               <p class="mt-2 text-sm text-foreground/75">{s.body}</p>
             </CardContent>
           </Card>

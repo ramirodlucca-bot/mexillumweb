@@ -1,0 +1,18 @@
+---
+const year = new Date().getFullYear();
+---
+
+<footer class="bg-background text-foreground border-t border-border">
+  <div class="mx-auto flex max-w-5xl flex-col gap-6 px-6 py-12 sm:flex-row sm:items-center sm:justify-between sm:px-8">
+    <div>
+      <p class="font-mono text-sm tracking-[0.15em] text-foreground uppercase">Mexillum</p>
+      <p class="mt-1 text-sm text-foreground/60">
+        Almacenamiento y generación de energía para industria — México
+      </p>
+    </div>
+    <div class="flex items-center gap-6 font-mono text-xs tracking-wide text-foreground/50 uppercase">
+      <a href="/diagnostico" class="hover:text-foreground transition-colors">Diagnóstico</a>
+      <span>© {year} Mexillum</span>
+    </div>
+  </div>
+</footer>

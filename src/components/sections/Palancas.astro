@@ -1,24 +1,29 @@
 ---
 import SectionHeader from "@/components/SectionHeader.astro";
+import Icon from "@/components/Icon.astro";
 
 const palancas = [
   {
     n: "01",
+    icon: "coin" as const,
     title: "Costo eléctrico bajo control",
     body: "La factura deja de ser algo que se sufre y pasa a ser algo que se gestiona: cargo por demanda, exposición a horarios caros, factor de potencia. Es la palanca que paga el proyecto.",
   },
   {
     n: "02",
+    icon: "bolt" as const,
     title: "Continuidad de operación",
     body: "Lo que se protege no es el kWh: es el lote, el turno, el producto. Respaldo instantáneo ante fallas y perturbaciones que un generador de emergencia no alcanza a cubrir.",
   },
   {
     n: "03",
+    icon: "shield-check" as const,
     title: "Riesgo transferido",
     body: "El activo, su degradación y su rendimiento son responsabilidad de Mexillum, con garantía contractual. Un solo responsable — no una cadena de proveedores señalándose entre sí.",
   },
   {
     n: "04",
+    icon: "wallet-off" as const,
     title: "Sin CAPEX",
     body: "Existen esquemas que pueden estructurarse para que la inversión no salga de tu balance. El proyecto puede desarrollarse sin inmovilizar capital propio.",
   },
@@ -35,8 +40,11 @@ const palancas = [
       {
         palancas.map((p) => (
           <div data-reveal-item class="bg-background p-8">
-            <span class="font-mono text-sm text-primary">{p.n}</span>
-            <h3 class="mt-3 text-xl font-semibold sm:text-2xl">{p.title}</h3>
+            <div class="flex items-center justify-between">
+              <Icon name={p.icon} class="size-7 text-primary" />
+              <span class="font-mono text-sm text-primary">{p.n}</span>
+            </div>
+            <h3 class="mt-4 text-xl font-semibold sm:text-2xl">{p.title}</h3>
             <p class="mt-3 text-base text-foreground/75">{p.body}</p>
           </div>
         ))
