@@ -65,6 +65,14 @@ export const POST: APIRoute = async ({ request }) => {
   const { respuestas, contacto } = body;
   const resultado = calcularDiagnostico(respuestas);
 
+  // Red de seguridad: mientras no haya email configurado, esto es lo único
+  // que evita perder el lead — queda visible en los logs de la función en
+  // Vercel (`vercel logs` o el dashboard) aunque RESEND_API_KEY no exista.
+  console.log(
+    "LEAD_DIAGNOSTICO:",
+    JSON.stringify({ contacto, respuestas, resultado, fecha: new Date().toISOString() }),
+  );
+
   const apiKey = import.meta.env.RESEND_API_KEY;
   const destino = import.meta.env.LEAD_NOTIFICATION_EMAIL;
 

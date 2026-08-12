@@ -1,0 +1,98 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import SectionHeader from "@/components/SectionHeader.astro";
+
+export const prerender = true;
+
+// TODO: reemplazar por el domicilio fiscal real y el contacto real de
+// Mexillum en cuanto estén definidos (mismo pendiente que en /diagnostico).
+const CONTACTO_ARCO = "[correo de contacto pendiente]";
+const DOMICILIO = "[domicilio fiscal pendiente]";
+---
+
+<Layout
+  title="Aviso de privacidad — Mexillum"
+  description="Aviso de privacidad de Mexillum sobre el tratamiento de datos personales recabados a través de este sitio."
+>
+  <main class="bg-background text-foreground min-h-screen">
+    <div class="mx-auto max-w-2xl px-6 py-24 sm:px-8">
+      <SectionHeader kicker="Legal">Aviso de privacidad</SectionHeader>
+
+      <div class="mt-10 space-y-8 text-base text-foreground/80">
+        <section>
+          <h2 class="text-lg font-semibold text-foreground">Responsable</h2>
+          <p class="mt-2">
+            Mexillum ("Mexillum", "nosotros") es responsable del tratamiento
+            de tus datos personales conforme a la Ley Federal de Protección
+            de Datos Personales en Posesión de los Particulares (LFPDPPP),
+            con domicilio en {DOMICILIO}.
+          </p>
+        </section>
+
+        <section>
+          <h2 class="text-lg font-semibold text-foreground">
+            Datos que recabamos
+          </h2>
+          <p class="mt-2">
+            A través del formulario de diagnóstico y del formulario de
+            contacto recabamos: nombre, email y, opcionalmente, teléfono;
+            además de datos operativos de la instalación que nos
+            proporcionás voluntariamente (sector, estado, demanda eléctrica
+            aproximada, horas de operación, y gasto eléctrico mensual si lo
+            informás). No recabamos datos personales sensibles.
+          </p>
+        </section>
+
+        <section>
+          <h2 class="text-lg font-semibold text-foreground">
+            Finalidad del tratamiento
+          </h2>
+          <p class="mt-2">
+            Usamos estos datos para: generar tu perfil de consumo y
+            diagnóstico estimado, contactarte para agendar una llamada de
+            consulta, y dar seguimiento comercial a tu solicitud. No usamos
+            tus datos para fines distintos a estos sin tu consentimiento.
+          </p>
+        </section>
+
+        <section>
+          <h2 class="text-lg font-semibold text-foreground">
+            Transferencia de datos
+          </h2>
+          <p class="mt-2">
+            No vendemos ni transferimos tus datos personales a terceros,
+            salvo a los proveedores de servicio estrictamente necesarios
+            para operar este sitio y procesar tu solicitud (por ejemplo,
+            el proveedor de envío de email), quienes están obligados a
+            proteger tu información.
+          </p>
+        </section>
+
+        <section>
+          <h2 class="text-lg font-semibold text-foreground">
+            Derechos ARCO
+          </h2>
+          <p class="mt-2">
+            Tenés derecho a acceder, rectificar, cancelar u oponerte al uso
+            de tus datos personales (derechos ARCO). Para ejercerlos,
+            escribinos a {CONTACTO_ARCO}.
+          </p>
+        </section>
+
+        <section>
+          <h2 class="text-lg font-semibold text-foreground">
+            Cambios a este aviso
+          </h2>
+          <p class="mt-2">
+            Podemos actualizar este aviso de privacidad. Cualquier cambio se
+            publicará en esta misma página.
+          </p>
+        </section>
+
+        <p class="text-sm text-foreground/50">
+          Última actualización: {new Date().toLocaleDateString("es-MX", { year: "numeric", month: "long", day: "numeric" })}
+        </p>
+      </div>
+    </div>
+  </main>
+</Layout>
