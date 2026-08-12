@@ -4,8 +4,8 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 @theme {
-  --font-sans: "Barlow Semi Condensed", "Helvetica Neue", Arial, sans-serif;
-  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+  --font-sans: "IBM Plex Sans", "Helvetica Neue", Arial, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, monospace;
 
   --animate-accordion-down: accordion-down 0.2s ease-out;
   --animate-accordion-up: accordion-up 0.2s ease-out;
@@ -90,11 +90,11 @@
 
 :root {
   /* Mexillum — modo claro: contenido denso, formularios */
-  --mex-deep: #0e1f16;
-  --mex-deep-alt: #1c3b28;
-  --mex-bright: #3ed17f;
-  --mex-accent-light: #1e9e5a;
-  --mex-cream: #f3f4ef;
+  --mex-deep: #14171b;
+  --mex-deep-alt: #1e2227;
+  --mex-bright: #e8a33d;
+  --mex-accent-light: #7a4712;
+  --mex-cream: #f2f1ea;
 
   --background: var(--mex-cream);
   --foreground: var(--mex-deep);
