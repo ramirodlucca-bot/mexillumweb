@@ -78,7 +78,7 @@ export const POST: APIRoute = async ({ request }) => {
 
   if (apiKey && destino) {
     try {
-      await fetch("https://api.resend.com/emails", {
+      const resendRes = await fetch("https://api.resend.com/emails", {
         method: "POST",
         headers: {
           Authorization: `Bearer ${apiKey}`,
@@ -91,9 +91,18 @@ export const POST: APIRoute = async ({ request }) => {
           html: formatearEmailHtml(respuestas, contacto),
         }),
       });
-    } catch {
+      const resendBody = await resendRes.text();
+      if (resendRes.ok) {
+        console.log("RESEND_OK:", resendBody);
+      } else {
+        console.error("RESEND_ERROR:", resendRes.status, resendBody);
+      }
+    } catch (err) {
       // No bloqueamos la respuesta al usuario si falla el envío del email.
+      console.error("RESEND_EXCEPTION:", err);
     }
+  } else {
+    console.warn("RESEND_SKIPPED: faltan RESEND_API_KEY o LEAD_NOTIFICATION_EMAIL");
   }
 
   return new Response(JSON.stringify({ ok: true, resultado }), {
