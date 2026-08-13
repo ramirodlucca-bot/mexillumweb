@@ -1,3 +1,4 @@
+import { track } from "@vercel/analytics";
 import {
   calcularDiagnostico,
   REFERENCIA_CARGO_DEMANDA_MXN_KW,
@@ -70,6 +71,7 @@ export function initDiagnosticoForm(): void {
     if (current < TOTAL_PASOS) {
       current += 1;
       showStep(current);
+      track("diagnostico_pregunta", { pregunta: current });
       return;
     }
     mostrarResultado();
@@ -126,9 +128,12 @@ export function initDiagnosticoForm(): void {
     form!.hidden = true;
     resultado!.hidden = false;
     resultado!.scrollIntoView({ behavior: "smooth", block: "start" });
+
+    track("diagnostico_completado", { sector: respuestas.sector });
   }
 
   showStep(current);
+  track("diagnostico_pregunta", { pregunta: 1 });
 
   const contactoForm = document.querySelector<HTMLFormElement>("[data-contacto-form]");
   const contactoStatus = contactoForm?.querySelector<HTMLElement>("[data-contacto-status]");
@@ -168,6 +173,7 @@ export function initDiagnosticoForm(): void {
       }
       contactoForm.reset();
       if (contactoSubmit) contactoSubmit.textContent = "Enviado";
+      track("diagnostico_contacto_enviado");
     } catch {
       if (contactoStatus) {
         contactoStatus.textContent =
