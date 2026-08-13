@@ -42,8 +42,12 @@ function formatearEmailHtml(respuestas: DiagnosticoRespuestas, contacto: Contact
         respuestas.gastoMensualMXN ? `$${respuestas.gastoMensualMXN} MXN` : "no informado"
       }</li>
     </ul>
-    <p>Cargo por demanda estimado: $${resultado.cargoDemandaEstimadoMXN} MXN/mes</p>
-    <p>Ahorro estimado: $${resultado.ahorroMinMXN}–$${resultado.ahorroMaxMXN} MXN/mes</p>
+    <p>Reducción típica de demanda pico esperada: ${resultado.reduccionPicoMinPct}%–${resultado.reduccionPicoMaxPct}%</p>
+    <p>Ahorro estimado: ${
+      resultado.tieneFacturaReal
+        ? `$${resultado.ahorroMinMXN}–$${resultado.ahorroMaxMXN} MXN/mes (sobre la factura real declarada)`
+        : "no calculado — el prospecto no informó su gasto mensual"
+    }</p>
     <p>Palancas priorizadas: ${resultado.palancas.join(", ")}</p>
   `;
 }

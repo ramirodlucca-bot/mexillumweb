@@ -1,7 +1,8 @@
 import { track } from "@vercel/analytics";
 import {
   calcularDiagnostico,
-  REFERENCIA_CARGO_DEMANDA_MXN_KW,
+  AHORRO_SOBRE_FACTURA_MIN_PCT,
+  AHORRO_SOBRE_FACTURA_MAX_PCT,
   type DiagnosticoRespuestas,
 } from "@/lib/diagnostico-calc";
 
@@ -99,17 +100,19 @@ export function initDiagnosticoForm(): void {
     const palancasEl = resultado.querySelector<HTMLOListElement>("[data-resultado-palancas]");
 
     if (desglose) {
-      desglose.textContent = `Demanda pico ingresada: ${respuestas.demandaPicoKW} kW × tarifa de referencia $${REFERENCIA_CARGO_DEMANDA_MXN_KW} MXN/kW = $${formatMXN(
-        r.cargoDemandaEstimadoMXN,
-      )} MXN/mes de cargo por demanda estimado. Un sistema de almacenamiento dimensionado para tu planta podría reducir ese pico entre 20% y 35%.`;
+      desglose.textContent = r.tieneFacturaReal
+        ? `Con una demanda pico de ${respuestas.demandaPicoKW} kW, un sistema de almacenamiento bien dimensionado suele reducir esa demanda entre ${r.reduccionPicoMinPct}% y ${r.reduccionPicoMaxPct}%.`
+        : `Con una demanda pico de ${respuestas.demandaPicoKW} kW, un sistema de almacenamiento bien dimensionado suele reducir esa demanda entre ${r.reduccionPicoMinPct}% y ${r.reduccionPicoMaxPct}% — típico para instalaciones con tu perfil.`;
     }
     if (rango) {
-      rango.textContent = `$${formatMXN(r.ahorroMinMXN)}–$${formatMXN(r.ahorroMaxMXN)} MXN/mes estimados`;
+      rango.textContent = r.tieneFacturaReal
+        ? `$${formatMXN(r.ahorroMinMXN!)}–$${formatMXN(r.ahorroMaxMXN!)} MXN/mes estimados`
+        : `${r.reduccionPicoMinPct}%–${r.reduccionPicoMaxPct}% de reducción en demanda pico`;
     }
     if (porcentaje) {
-      porcentaje.textContent = r.porcentajeSobreFactura
-        ? `Eso representa aproximadamente el ${r.porcentajeSobreFactura.min}%–${r.porcentajeSobreFactura.max}% de tu factura mensual actual.`
-        : "Este cálculo es de referencia — el ahorro real se confirma con la medición de tu instalación.";
+      porcentaje.textContent = r.tieneFacturaReal
+        ? `Eso equivale aproximadamente a un ${AHORRO_SOBRE_FACTURA_MIN_PCT}%–${AHORRO_SOBRE_FACTURA_MAX_PCT}% de tu factura mensual actual. El rango exacto depende del detalle de tu tarifa — lo confirmamos en la llamada de consulta.`
+        : "Para traducir esto a pesos con precisión necesitamos tu tarifa real (varía según tu factura) — te la pedimos en la llamada de consulta, sin costo.";
     }
     if (notaGeneracion) {
       notaGeneracion.textContent = r.notaGeneracion ?? "";

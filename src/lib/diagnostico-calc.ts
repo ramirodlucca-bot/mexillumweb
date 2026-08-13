@@ -2,6 +2,16 @@
 // desde el wizard en el navegador (src/scripts/diagnostico-form.ts) como
 // desde el endpoint /api/diagnostico.ts, para que el número que ve el
 // usuario y el que llega por email sean siempre el mismo cálculo.
+//
+// Nunca inventamos un peso a partir de una tarifa genérica: la tarifa real
+// (MXN/kW, horarios, factor de potencia) está en la factura de cada
+// cliente y varía por región/tarifa/temporada — no hay un valor único que
+// sirva para todos. Por eso:
+// - Siempre mostramos el rango de reducción de demanda pico como
+//   PORCENTAJE (típico de la industria para BESS bien dimensionado).
+// - Solo mostramos un rango en PESOS cuando el usuario ya nos dio su
+//   gasto mensual real (pregunta 8, opcional) — y ese rango se calcula
+//   como porcentaje de SU factura real, no de una tarifa supuesta.
 
 export type Sector = "manufactura" | "alimentos" | "remota" | "publico" | "otra";
 export type Criticidad = "sin_impacto" | "pierdo_producto" | "paro_linea";
@@ -24,41 +34,40 @@ export interface Contacto {
   telefono?: string;
 }
 
-// ⚠️ Tarifa de referencia (MXN/kW/mes), NO la tarifa real de CFE vigente —
-// es un supuesto explícito para poder mostrar aritmética sin pedir la
-// factura. Alguien de Mexillum con datos de tarifa actuales debería
-// revisar/ajustar este único valor antes de tráfico real de prospectos.
-export const REFERENCIA_CARGO_DEMANDA_MXN_KW = 450;
-export const REDUCCION_PICO_MIN = 0.2;
-export const REDUCCION_PICO_MAX = 0.35;
+// ⚠️ Rangos típicos de referencia, no una promesa — alguien de Mexillum
+// con datos reales de proyectos debería revisar/ajustar estos valores
+// antes de tráfico real de prospectos.
+export const REDUCCION_PICO_MIN_PCT = 20;
+export const REDUCCION_PICO_MAX_PCT = 35;
+// Ahorro típico sobre la factura TOTAL (no solo el cargo por demanda)
+// para instalaciones con perfil de demanda relevante — solo se aplica
+// cuando el usuario ya nos dio su gasto mensual real.
+export const AHORRO_SOBRE_FACTURA_MIN_PCT = 5;
+export const AHORRO_SOBRE_FACTURA_MAX_PCT = 15;
 
 export interface ResultadoDiagnostico {
-  cargoDemandaEstimadoMXN: number;
-  ahorroMinMXN: number;
-  ahorroMaxMXN: number;
-  porcentajeSobreFactura?: { min: number; max: number };
+  tieneFacturaReal: boolean;
+  ahorroMinMXN?: number;
+  ahorroMaxMXN?: number;
+  reduccionPicoMinPct: number;
+  reduccionPicoMaxPct: number;
   palancas: string[];
   notaGeneracion?: string;
 }
 
 export function calcularDiagnostico(r: DiagnosticoRespuestas): ResultadoDiagnostico {
-  const cargoDemandaEstimadoMXN = Math.round(r.demandaPicoKW * REFERENCIA_CARGO_DEMANDA_MXN_KW);
-  const ahorroMinMXN = Math.round(cargoDemandaEstimadoMXN * REDUCCION_PICO_MIN);
-  const ahorroMaxMXN = Math.round(cargoDemandaEstimadoMXN * REDUCCION_PICO_MAX);
-
-  const porcentajeSobreFactura =
-    r.gastoMensualMXN && r.gastoMensualMXN > 0
-      ? {
-          min: Math.round((ahorroMinMXN / r.gastoMensualMXN) * 100),
-          max: Math.round((ahorroMaxMXN / r.gastoMensualMXN) * 100),
-        }
-      : undefined;
+  const tieneFacturaReal = !!r.gastoMensualMXN && r.gastoMensualMXN > 0;
 
   return {
-    cargoDemandaEstimadoMXN,
-    ahorroMinMXN,
-    ahorroMaxMXN,
-    porcentajeSobreFactura,
+    tieneFacturaReal,
+    ahorroMinMXN: tieneFacturaReal
+      ? Math.round((r.gastoMensualMXN! * AHORRO_SOBRE_FACTURA_MIN_PCT) / 100)
+      : undefined,
+    ahorroMaxMXN: tieneFacturaReal
+      ? Math.round((r.gastoMensualMXN! * AHORRO_SOBRE_FACTURA_MAX_PCT) / 100)
+      : undefined,
+    reduccionPicoMinPct: REDUCCION_PICO_MIN_PCT,
+    reduccionPicoMaxPct: REDUCCION_PICO_MAX_PCT,
     palancas: priorizarPalancas(r),
     notaGeneracion: r.yaGenera
       ? "Ya tenés generación propia resuelta — esto es sobre lo que todavía no tenés cubierto: qué pasa cuando esa energía falla y cuánto te cuesta en el peor momento del día."
