@@ -1,34 +1,20 @@
 ---
 import Button from "@/components/starwind/button/Button.astro";
 
-// Carrusel de 3 mensajes (direcciones A/B/C), cada uno con su propia foto.
-// Las tres son de instalaciones solares por ahora — cuando haya fotos de
-// BESS/plantas industriales, son mejor match temático para B y C.
-export const slides = [
-  {
-    kicker: "Almacenamiento y generación de energía para industria",
-    headline:
-      "Resolviste de dónde viene tu energía. Falta resolver qué pasa cuando falla — y cuánto te cuesta en el peor momento del día.",
-    subhead:
-      "Mexillum diseña, financia y opera sistemas de almacenamiento (BESS) y generación solar que protegen el EBITDA de tu operación. Un solo responsable, de la ingeniería a la operación.",
-    image: "/images/hero/solar-molino.avif",
-  },
-  {
-    kicker: "Almacenamiento y generación de energía para industria",
-    headline:
-      "Tu generador de emergencia cubre el apagón. No cubre el hueco de tensión que te para la línea.",
-    subhead:
-      "Mexillum diseña, financia y opera sistemas de almacenamiento (BESS) y generación solar que protegen tu operación en el momento exacto en que la red no alcanza. Un solo responsable, de la ingeniería a la operación.",
-    image: "/images/hero/solar-campo.avif",
-  },
-  {
-    kicker: "Gestión de riesgo y costo de energía para industria",
-    headline:
-      "El costo de un corte no aparece en tu factura eléctrica. Aparece en el lote perdido y la línea parada.",
-    subhead:
-      "Mexillum diseña, financia y opera sistemas de almacenamiento (BESS) y generación solar que controlan ese costo antes de que llegue a tu EBITDA. Un solo responsable, de la ingeniería a la operación.",
-    image: "/images/hero/paneles-solares.webp",
-  },
+// El mensaje es único (dirección A, el insight del brief: generación
+// resuelta vs. almacenamiento no) — arma el hilo con la sección "El
+// problema" que sigue. Solo el fondo fotográfico rota entre las 3 fotos
+// disponibles, para mantener movimiento sin diluir la promesa central.
+const HERO_KICKER = "Almacenamiento y generación de energía para industria";
+const HERO_HEADLINE =
+  "Resolviste de dónde viene tu energía. Falta resolver qué pasa cuando falla — y cuánto te cuesta en el peor momento del día.";
+const HERO_SUBHEAD =
+  "Mexillum diseña, financia y opera sistemas de almacenamiento (BESS) y generación solar que protegen el EBITDA de tu operación. Un solo responsable, de la ingeniería a la operación.";
+
+export const heroImages = [
+  "/images/hero/solar-molino.avif",
+  "/images/hero/solar-campo.avif",
+  "/images/hero/paneles-solares.webp",
 ];
 ---
 
@@ -36,38 +22,27 @@ export const slides = [
   <div
     class="relative flex min-h-[92vh] flex-col justify-center"
     data-hero-carousel
-    role="region"
-    aria-roledescription="carrusel"
-    aria-label="Mensajes principales"
   >
     <div
       class="animate-reveal absolute inset-0 bg-cover bg-center transition-opacity duration-500"
-      style={`background-image: url(${slides[0].image})`}
+      style={`background-image: url(${heroImages[0]})`}
       data-hero-bg
+      aria-hidden="true"
     >
     </div>
     <div class="absolute inset-0 bg-background/70" aria-hidden="true"></div>
 
-    <div
-      class="animate-reveal relative z-10 mx-auto w-full max-w-5xl px-6 py-24 transition-opacity duration-500 sm:px-8"
-      data-hero-content
-    >
-      <p
-        class="font-mono text-xs tracking-[0.2em] text-primary uppercase sm:text-sm"
-        data-hero-kicker
-      >
-        {slides[0].kicker}
+    <div class="animate-reveal relative z-10 mx-auto w-full max-w-5xl px-6 py-24 sm:px-8">
+      <p class="font-mono text-xs tracking-[0.2em] text-primary uppercase sm:text-sm">
+        {HERO_KICKER}
       </p>
 
-      <h1
-        class="mt-6 max-w-4xl text-4xl leading-[1.08] font-semibold text-balance sm:text-5xl md:text-6xl"
-        data-hero-headline
-      >
-        {slides[0].headline}
+      <h1 class="mt-6 max-w-4xl text-4xl leading-[1.08] font-semibold text-balance sm:text-5xl md:text-6xl">
+        {HERO_HEADLINE}
       </h1>
 
-      <p class="mt-8 max-w-2xl text-lg text-foreground/80 sm:text-xl" data-hero-subhead>
-        {slides[0].subhead}
+      <p class="mt-8 max-w-2xl text-lg text-foreground/80 sm:text-xl">
+        {HERO_SUBHEAD}
       </p>
 
       <div class="mt-10">
@@ -81,20 +56,20 @@ export const slides = [
       <button
         type="button"
         data-hero-prev
-        aria-label="Mensaje anterior"
+        aria-label="Imagen anterior"
         class="text-foreground/50 hover:text-foreground flex size-9 items-center justify-center rounded-full border border-border transition-colors"
       >
         ‹
       </button>
 
-      <div class="flex items-center gap-2" role="tablist" aria-label="Mensajes del hero" data-hero-dots>
+      <div class="flex items-center gap-2" role="tablist" aria-label="Imágenes de fondo" data-hero-dots>
         {
-          slides.map((_, i) => (
+          heroImages.map((_, i) => (
             <button
               type="button"
               role="tab"
               data-hero-dot={i}
-              aria-label={`Ir al mensaje ${i + 1} de ${slides.length}`}
+              aria-label={`Ver imagen ${i + 1} de ${heroImages.length}`}
               class="h-1.5 w-7 rounded-full bg-foreground/25 transition-colors"
             />
           ))
@@ -104,7 +79,7 @@ export const slides = [
       <button
         type="button"
         data-hero-next
-        aria-label="Mensaje siguiente"
+        aria-label="Imagen siguiente"
         class="text-foreground/50 hover:text-foreground flex size-9 items-center justify-center rounded-full border border-border transition-colors"
       >
         ›
@@ -113,13 +88,9 @@ export const slides = [
   </div>
 </section>
 
-<script define:vars={{ slides }}>
+<script define:vars={{ heroImages }}>
   const root = document.querySelector("[data-hero-carousel]");
   const bg = root.querySelector("[data-hero-bg]");
-  const content = root.querySelector("[data-hero-content]");
-  const kickerEl = root.querySelector("[data-hero-kicker]");
-  const headlineEl = root.querySelector("[data-hero-headline]");
-  const subheadEl = root.querySelector("[data-hero-subhead]");
   const dots = [...root.querySelectorAll("[data-hero-dot]")];
   const prevBtn = root.querySelector("[data-hero-prev]");
   const nextBtn = root.querySelector("[data-hero-next]");
@@ -128,10 +99,7 @@ export const slides = [
   let timer;
 
   function render(i) {
-    kickerEl.textContent = slides[i].kicker;
-    headlineEl.textContent = slides[i].headline;
-    subheadEl.textContent = slides[i].subhead;
-    bg.style.backgroundImage = `url(${slides[i].image})`;
+    bg.style.backgroundImage = `url(${heroImages[i]})`;
     dots.forEach((d, di) => {
       d.classList.toggle("bg-primary", di === i);
       d.classList.toggle("bg-foreground/25", di !== i);
@@ -140,14 +108,12 @@ export const slides = [
   }
 
   function goTo(i) {
-    const next = (i + slides.length) % slides.length;
+    const next = (i + heroImages.length) % heroImages.length;
     bg.classList.add("opacity-0");
-    content.classList.add("opacity-0");
     setTimeout(() => {
       index = next;
       render(index);
       bg.classList.remove("opacity-0");
-      content.classList.remove("opacity-0");
     }, 500);
   }
 
