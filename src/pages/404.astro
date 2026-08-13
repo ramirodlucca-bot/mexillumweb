@@ -1,0 +1,33 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import Button from "@/components/starwind/button/Button.astro";
+
+export const prerender = true;
+---
+
+<Layout
+  title="Página no encontrada — Mexillum"
+  description="La página que buscás no existe o cambió de dirección."
+>
+  <main class="dark bg-background text-foreground flex min-h-screen flex-col justify-center">
+    <div class="mx-auto max-w-2xl px-6 py-24 text-center sm:px-8">
+      <p class="font-mono text-xs tracking-[0.2em] text-primary uppercase sm:text-sm">
+        Error 404
+      </p>
+      <h1 class="mt-6 text-3xl leading-[1.1] font-semibold text-balance sm:text-4xl md:text-5xl">
+        Esta página no existe o cambió de dirección.
+      </h1>
+      <p class="mt-6 text-lg text-foreground/80">
+        Volvé al inicio o empezá el diagnóstico de tu planta.
+      </p>
+      <div class="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
+        <Button as="a" href="/" variant="primary" size="lg">
+          Volver al inicio
+        </Button>
+        <Button as="a" href="/diagnostico" variant="outline" size="lg">
+          Iniciar diagnóstico
+        </Button>
+      </div>
+    </div>
+  </main>
+</Layout>
