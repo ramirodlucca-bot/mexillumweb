@@ -5,6 +5,7 @@ import "@fontsource/ibm-plex-sans/600.css";
 import "@fontsource/ibm-plex-mono/400.css";
 import "../styles/starwind.css";
 import Footer from "@/components/Footer.astro";
+import Analytics from "@vercel/analytics/astro";
 
 interface Props {
   title: string;
@@ -46,6 +47,7 @@ const ogImageUrl = new URL(ogImage, Astro.site);
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={ogImageUrl} />
+    <Analytics />
     <noscript>
       <style>
         [data-reveal],
