@@ -13,6 +13,8 @@ const ofertas = [
     body: "Cuando el diagnóstico lo justifica, sumamos generación propia dimensionada al perfil real de consumo de la instalación — no como paquete estándar.",
   },
 ];
+
+const FABRICANTES = ["Tesla Energy", "Schneider Electric", "Sineng", "Cornex", "Solis", "Etap"];
 ---
 
 <section class="bg-background text-foreground border-b border-border">
@@ -40,7 +42,20 @@ const ofertas = [
       }
     </div>
 
-    <p data-reveal class="mt-10 font-mono text-xs text-foreground/45">
+    <div data-reveal class="mt-14 border-t border-border pt-8">
+      <p class="font-mono text-xs tracking-[0.15em] text-foreground/40 uppercase">
+        Equipos de
+      </p>
+      <div class="mt-4 flex flex-wrap items-center gap-x-8 gap-y-3">
+        {
+          FABRICANTES.map((f) => (
+            <span class="font-mono text-sm text-foreground/60">{f}</span>
+          ))
+        }
+      </div>
+    </div>
+
+    <p data-reveal class="mt-8 font-mono text-xs text-foreground/45">
       Como resultado adicional, cada sistema reduce el uso de generación con
       combustibles fósiles.
     </p>
