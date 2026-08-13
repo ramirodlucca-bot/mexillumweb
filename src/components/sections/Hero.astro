@@ -11,11 +11,22 @@ const HERO_HEADLINE =
 const HERO_SUBHEAD =
   "Mexillum diseña, financia y opera sistemas de almacenamiento (BESS) y generación solar que protegen el EBITDA de tu operación. Un solo responsable, de la ingeniería a la operación.";
 
+// Cada foto tiene una versión de 960px de ancho para mobile/tablet y la
+// original para pantallas grandes — el navegador elige sola cuál bajar
+// según el tamaño real de pantalla y su densidad de píxeles (960w cubre
+// celulares retina de hasta ~480px CSS, que es la mayoría). La tercera
+// foto ya es nativamente 960px, así que no necesita una versión chica
+// aparte.
 export const heroImages = [
-  "/images/hero/solar-molino.avif",
-  "/images/hero/solar-campo.avif",
-  "/images/hero/paneles-solares.webp",
+  { small: "/images/hero/solar-molino-960.avif", large: "/images/hero/solar-molino.avif", largeWidth: 1880 },
+  { small: "/images/hero/solar-campo-960.avif", large: "/images/hero/solar-campo.avif", largeWidth: 1920 },
+  { small: "/images/hero/paneles-solares.webp", large: "/images/hero/paneles-solares.webp", largeWidth: 960 },
 ];
+
+function srcsetFor(img: (typeof heroImages)[number]) {
+  if (img.small === img.large) return undefined;
+  return `${img.small} 960w, ${img.large} ${img.largeWidth}w`;
+}
 ---
 
 <section class="dark bg-background text-foreground border-b border-border relative overflow-hidden">
@@ -23,13 +34,16 @@ export const heroImages = [
     class="relative flex min-h-[92vh] flex-col justify-center"
     data-hero-carousel
   >
-    <div
-      class="animate-reveal absolute inset-0 bg-cover bg-center transition-opacity duration-500"
-      style={`background-image: url(${heroImages[0]})`}
+    <img
+      class="animate-reveal absolute inset-0 h-full w-full object-cover transition-opacity duration-500"
+      src={heroImages[0].large}
+      srcset={srcsetFor(heroImages[0])}
+      sizes="100vw"
+      alt=""
+      fetchpriority="high"
+      decoding="async"
       data-hero-bg
-      aria-hidden="true"
-    >
-    </div>
+    />
     <div class="absolute inset-0 bg-background/70" aria-hidden="true"></div>
 
     <div class="animate-reveal relative z-10 mx-auto w-full max-w-5xl px-6 py-24 sm:px-8">
@@ -99,7 +113,9 @@ export const heroImages = [
   let timer;
 
   function render(i) {
-    bg.style.backgroundImage = `url(${heroImages[i]})`;
+    const img = heroImages[i];
+    bg.src = img.large;
+    bg.srcset = img.small === img.large ? "" : `${img.small} 960w, ${img.large} ${img.largeWidth}w`;
     dots.forEach((d, di) => {
       d.classList.toggle("bg-primary", di === i);
       d.classList.toggle("bg-foreground/25", di !== i);
